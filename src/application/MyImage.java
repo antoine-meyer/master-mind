@@ -1,4 +1,4 @@
-package tp_note_2017;
+package application;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,7 +1,9 @@
-package tp_note_2017;
+package controleurs;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import application.Modele;
 
 public class ControleurCase implements MouseListener {
 	/**

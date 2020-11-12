@@ -1,4 +1,4 @@
-package tp_note_2017;
+package application;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -43,9 +43,9 @@ public class VueGrille extends JPanel implements Observateur {
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		// on ajoute chacune des rangees en commencant l'affichage par le bas
-		for (int i = 0; i < this.model.getRangees().length; i++) {
+		for (int i = 0; i < this.model.getRangees().size(); i++) {
 			int hauteur = TAILLE*9 - (i + 1) * TAILLE;
-			this.model.getRangees()[i].getImage(i).dessinerDansComposant(g, 0, hauteur);
+			this.model.getRangees().get(i).getImage(i).dessinerDansComposant(g, 0, hauteur);
 		}
 		//on affiche ou non la ligne secrète
 		if(!this.model.getMasquer()) {

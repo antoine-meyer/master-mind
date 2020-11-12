@@ -1,8 +1,10 @@
-package tp_note_2017;
+package application;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+
+import rangees.RangeeSimple;
 
 /**
  * La classe ChoixCoul permet de creer un JPanel qui affiche

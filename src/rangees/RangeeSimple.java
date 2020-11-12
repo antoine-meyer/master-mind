@@ -1,6 +1,9 @@
-package tp_note_2017;
+package rangees;
 
 import java.awt.Color;
+
+import application.Modele;
+import application.MyImage;
 
 
 /**
@@ -68,7 +71,6 @@ public class RangeeSimple implements Rangee {
 		int ECART = 10;
 		// creation de l'image du bandeau
 		MyImage im = new MyImage(400, TAILLE);
-
 		// dessin des cases avec les disques de couleur
 		for (int j = 0; j < ints.length; j++) {	
 			Color coul = couleurs[ints[j]];

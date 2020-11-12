@@ -1,4 +1,7 @@
-package tp_note_2017;
+package rangees;
+
+import application.Modele;
+import application.MyImage;
 
 public interface Rangee {
 	/**

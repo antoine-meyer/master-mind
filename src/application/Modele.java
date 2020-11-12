@@ -1,6 +1,9 @@
-package tp_note_2017;
+package application;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import rangees.*;
 
 public class Modele implements Sujet {
 	/**
@@ -22,7 +25,8 @@ public class Modele implements Sujet {
 	/**
 	 * attribut qui est une liste de Rangee du jeu et contenant initialement des instances de RangeeSimple (ArrayList)
 	 */
-	private Rangee[] rangees;
+	//private Rangee[] rangees;
+	private List<Rangee> rangees;
 	/**
 	 * attribut correspondant 
 	 */
@@ -40,10 +44,10 @@ public class Modele implements Sujet {
 		this.colonneEnCours = 0;
 		int[] intSecret = { (int) (Math.random() * 6 + 1), (int) (Math.random() * 6 + 1), (int) (Math.random() * 6 + 1), (int) (Math.random() * 6 + 1) };
 		this.secret = new RangeeSimple(intSecret, this);
-		this.rangees = new RangeeSimple[7];
+		this.rangees = new ArrayList<Rangee>();
 		int[] ints = { 0, 0, 0, 0 }; 
-		for (int i = 0; i < this.getRangees().length; i++) {
-			this.rangees[i] = new RangeeSimple(ints, this);
+		for (int i = 0; i < 7; i++) {
+			this.rangees.add(new RangeeSimple(ints, this));
 		}
 		this.couleurEnCours = 0;
 		this.observateurs = new ArrayList<Observateur>();
@@ -75,7 +79,7 @@ public class Modele implements Sujet {
 	/**
 	 * 
 	 */
-	public Rangee[] getRangees() {
+	public List<Rangee> getRangees(){
 		return this.rangees;
 	}
 	/**
@@ -85,14 +89,9 @@ public class Modele implements Sujet {
 		//modifier la couleur courante
 		this.couleurEnCours = i;
 		//affecter la couleur courante à la case courante de la rangée en cours
-		int[] ints = {
-				this.rangees[this.ligneEnCours].getInt()[0],
-				this.rangees[this.ligneEnCours].getInt()[1],
-				this.rangees[this.ligneEnCours].getInt()[2],
-				this.rangees[this.ligneEnCours].getInt()[3]
-		}; 
+		int[] ints = this.getRangees().get(this.ligneEnCours).getInt().clone();
 		ints[this.colonneEnCours] = this.couleurEnCours;
-		this.rangees[this.ligneEnCours].setInt(ints);
+		this.getRangees().get(ligneEnCours).setInt(ints);
 		//on avance d'une case pour etre sympa avec le joueur
 		if(this.getColonneEnCours() < 3) {
 			this.setColonneEnCours(this.getColonneEnCours()+1);
@@ -110,8 +109,24 @@ public class Modele implements Sujet {
 	 * 
 	 */
 	public void valider() {
-		//faire des choses
-		System.out.println("Methode valider");
+		int[] ints = this.getRangees().get(ligneEnCours).getInt();
+		//on vérifie que chaque bille à une couleur autre que celle de base
+		boolean validable = true;
+		for(int i=0; i<ints.length; i++) {
+			if(ints[i] == 0) {
+				validable = false;
+			}
+		}
+		//si toutes les billes ont une couleur alors on peut valider la rangée
+		if(validable) {
+			//on décore la rangée sur l'aquelle on travaille 
+			//this.rangees[this.ligneEnCours] = new RangeeSimple(ints, this);
+			this.rangees.set(ligneEnCours, new RangeeNotee(rangees.get(ligneEnCours)));
+			//this.rangees[this.ligneEnCours] = new RangeeNotee(this.rangees[this.ligneEnCours]);
+			//on avance dans les colonnes
+			this.ligneEnCours = this.ligneEnCours + 1;
+			this.colonneEnCours = 0;
+		}
 		this.notifierObservateurs();
 	}
 	/**

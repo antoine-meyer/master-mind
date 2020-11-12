@@ -1,7 +1,9 @@
-package tp_note_2017;
+package controleurs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import application.Modele;
 
 public class ControleurBouton implements ActionListener {
 	/**

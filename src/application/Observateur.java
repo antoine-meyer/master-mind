@@ -1,4 +1,4 @@
-package tp_note_2017;
+package application;
 
 public interface Observateur {
 	/**
