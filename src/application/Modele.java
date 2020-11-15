@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rangees.*;
+import strategie.StrategieDebutant;
+import strategie.StrategieEval;
+import strategie.StrategieExpert;
 
 public class Modele implements Sujet {
 	/**
@@ -36,6 +39,10 @@ public class Modele implements Sujet {
 	 */
 	private ArrayList<Observateur> observateurs;
 	/**
+	 * 
+	 */
+	private StrategieEval eval;
+	/**
 	 * constructeur d'un modèle
 	 */
 	public Modele() {
@@ -51,6 +58,7 @@ public class Modele implements Sujet {
 		}
 		this.couleurEnCours = 0;
 		this.observateurs = new ArrayList<Observateur>();
+		this.eval = new StrategieDebutant(this);
 	}
 	/**
 	 * 
@@ -119,10 +127,8 @@ public class Modele implements Sujet {
 		}
 		//si toutes les billes ont une couleur alors on peut valider la rangée
 		if(validable) {
-			//on décore la rangée sur l'aquelle on travaille 
-			//this.rangees[this.ligneEnCours] = new RangeeSimple(ints, this);
+			//on décore la rangée sur laquelle on travaille 
 			this.rangees.set(ligneEnCours, new RangeeNotee(rangees.get(ligneEnCours)));
-			//this.rangees[this.ligneEnCours] = new RangeeNotee(this.rangees[this.ligneEnCours]);
 			//on avance dans les colonnes
 			this.ligneEnCours = this.ligneEnCours + 1;
 			this.colonneEnCours = 0;
@@ -165,5 +171,14 @@ public class Modele implements Sujet {
 	 */
 	public int getCouleurEnCours() {
 		return this.couleurEnCours;
+	}
+	
+	public StrategieEval getEval() {
+		return this.eval;
+	}
+	
+	public void setEval(StrategieEval s) {
+		this.eval = s;
+		this.notifierObservateurs();
 	}
 }

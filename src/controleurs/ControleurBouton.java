@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import application.Modele;
+import strategie.StrategieDebutant;
+import strategie.StrategieExpert;
 
 public class ControleurBouton implements ActionListener {
 	/**
@@ -35,9 +37,11 @@ public class ControleurBouton implements ActionListener {
 		}
 		if(a.getActionCommand().equals("Debutant")) {
 			System.out.println(" débutant");
+			this.mod.setEval(new StrategieDebutant(this.mod));
 		}
 		if(a.getActionCommand().equals("Expert")) {
 			System.out.println(" expert");
+			this.mod.setEval(new StrategieExpert(this.mod));
 		}
 	}
 }

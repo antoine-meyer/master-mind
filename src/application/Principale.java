@@ -42,12 +42,12 @@ public class Principale {
 		JButton jb = new JButton("Masquer");
 		jb.addActionListener(c);
 		panelBouton.add(jb);
-		JButton btnExpert = new JButton("Expert");
-		btnExpert.addActionListener(c);
-		panelBouton.add(btnExpert);
 		JButton btnDebutant = new JButton("Debutant");
 		btnDebutant.addActionListener(c);
 		panelBouton.add(btnDebutant);
+		JButton btnExpert = new JButton("Expert");
+		btnExpert.addActionListener(c);
+		panelBouton.add(btnExpert);
 		// JPanel au sud de l'IG dans lequel se trouve l'affichage
 		// des couleurs disponibles 
 		ChoixCoul choixCoul= new ChoixCoul(m);
