@@ -6,7 +6,11 @@ Ce jeu est une copie/version informatisée du célèbre jeu de société **Maste
 
 Captures d'écrans du jeu :
 
-[à venir]
+![alt text](https://github.com/antoine-meyer/master-mind/blob/main/screenshot/expert.png)
+
+![alt text](https://github.com/antoine-meyer/master-mind/blob/main/screenshot/victoire.png)
+
+![alt text](https://github.com/antoine-meyer/master-mind/blob/main/screenshot/defaite.png)
 
 Fonctionnalitées :
 - Choix du mode d'évaluation des rangées :    
