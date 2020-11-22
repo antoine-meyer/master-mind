@@ -24,7 +24,7 @@ public class Modele implements Sujet {
 	/**
 	 * attribut qui est la rangée contenant la combinaison de couleurs à découvrir (tirées au hasard en début de partie)
 	 */
-	private RangeeSimple secret;
+	private Rangee secret;
 	/**
 	 * attribut qui est une liste de Rangee du jeu et contenant initialement des instances de RangeeSimple (ArrayList)
 	 */
@@ -43,10 +43,18 @@ public class Modele implements Sujet {
 	 */
 	private StrategieEval eval;
 	/**
+	 * 
+	 */
+	private boolean victoire;
+	/**
+	 * 
+	 */
+	private boolean fini;
+	/**
 	 * constructeur d'un modèle
 	 */
 	public Modele() {
-		//de base la solution est masquée
+		//de base la solution est masquée FAUT METTRE TRUE
 		this.masquer = true;
 		this.ligneEnCours = 0;
 		this.colonneEnCours = 0;
@@ -60,6 +68,8 @@ public class Modele implements Sujet {
 		this.couleurEnCours = 0;
 		this.observateurs = new ArrayList<Observateur>();
 		this.eval = new StrategieDebutant(this);
+		this.victoire = false;
+		this.fini = false;
 	}
 	/**
 	 * 
@@ -117,6 +127,13 @@ public class Modele implements Sujet {
 	/**
 	 * 
 	 */
+	public void setLigneEnCours(int l) {
+		this.ligneEnCours = l;
+		this.notifierObservateurs();
+	}
+	/**
+	 * 
+	 */
 	public void valider() {
 		//on regarde si on a fait 7 validations ou moins
 		if(this.ligneEnCours<=7) {
@@ -132,21 +149,37 @@ public class Modele implements Sujet {
 			if(validable) {
 				//on décore la rangée sur laquelle on travaille 
 				this.rangees.set(ligneEnCours, new RangeeNotee(rangees.get(ligneEnCours)));
-				//on avance dans les colonnes
+				//on regarde si on a gagné ou pas
+				//on recupere l'evaluation de la ligne
+				int[] a = this.eval.getResultat().clone();
+				//SINON on avance dans les colonnes
 				this.ligneEnCours = this.ligneEnCours + 1;
 				this.colonneEnCours = 0;
+				//on parcours la rangee notee
+				if(a[0] == 2 && a[1] == 2 && a[2] == 2 && a[3]== 2) {
+					this.victoire = true;
+					this.fini = true;
+				}
+				//si on a true alors on a gagné donc on ecrit
+				if(this.victoire == true){
+					//System.out.println("GAGNE !!");
+					//on decore la dernire ligne
+					this.secret = new RangeeFinale(this, this.secret);
+				}
 			}
 			this.notifierObservateurs();
 		}
 		//si on a fait 7 evaluations
-		if(this.ligneEnCours==7)
+		if(this.ligneEnCours==8)
 		{
 			//alors on enleve le curseur
 			//voir la classe VueGrille
 			
-			//on affiche victoire ou defaite en decorant la rangee secrete
-			
-			
+			//on affiche defaite en decorant la rangee secrete
+			if(this.victoire != true) {
+				this.secret = new RangeeFinale(this, this.secret);
+			}
+			this.fini = true;
 		}
 	}
 	/**
@@ -160,6 +193,12 @@ public class Modele implements Sujet {
 	 */
 	public Rangee getSecret() {
 		return this.secret;
+	}
+	/**
+	 * 
+	 */
+	public boolean getFini() {
+		return this.fini;
 	}
 	/**
 	 * 
@@ -195,4 +234,38 @@ public class Modele implements Sujet {
 		this.eval = s;
 		this.notifierObservateurs();
 	}
+	/**
+	 * 
+	 */
+	public void setSecret(Rangee r) {
+		this.secret = r;
+		this.notifierObservateurs();
+	}
+	/**
+	 * 
+	 */
+	public boolean getVictoire() {
+		return this.victoire;
+	}
+	/**
+	 * 
+	 */
+	public void setVictoire(boolean b) {
+		this.victoire = b;
+		this.notifierObservateurs();
+	}
+	/**
+	 * 
+	 */
+	public void setFini(boolean b) {
+		this.fini = b;
+		this.notifierObservateurs();
+	}
+	/**
+	 * 
+	 */
+	public void resetJeu() {
+		System.out.println("rejouer !");
+	}
+
 }

@@ -20,7 +20,7 @@ public class ControleurCouleur implements MouseListener {
 	 * 
 	 */
 	public void mouseClicked(MouseEvent arg0) {
-		if(arg0.getX() <= 6*50) {
+		if(arg0.getX() <= 6*50 && !this.mode.getFini()) {
 			int couleurEnCours = arg0.getX()/50+1;
 			this.mode.selectCouleur(couleurEnCours);
 		}

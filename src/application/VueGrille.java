@@ -52,7 +52,7 @@ public class VueGrille extends JPanel implements Observateur {
 			this.model.getSecret().getImage(-1).dessinerDansComposant(g, 0, 0);	
 		}
 		//on affiche la case actuelle que si on a fait 7 evaluations
-		if(this.model.getLigneEnCours() != 8) {
+		if(this.model.getLigneEnCours() != 8 && !this.model.getVictoire()) {
 			g.setColor(Color.BLACK);
 			g.drawRect(this.model.getColonneEnCours()*TAILLE+5, TAILLE*9-(this.model.getLigneEnCours()+1)*TAILLE+5, 40, 40);
 		}

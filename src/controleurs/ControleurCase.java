@@ -20,7 +20,7 @@ public class ControleurCase implements MouseListener {
 	 * 
 	 */
 	public void mouseClicked(MouseEvent arg0) {
-		if(arg0.getX() <= 4*50) {
+		if(arg0.getX() <= 4*50 && !this.mode.getFini()) {
 			int caseEnCours = arg0.getX()/50;
 			this.mode.setColonneEnCours(caseEnCours);
 		}

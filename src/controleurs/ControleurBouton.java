@@ -2,8 +2,12 @@ package controleurs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import application.Modele;
+import application.Observateur;
+import rangees.Rangee;
+import rangees.RangeeSimple;
 import strategie.StrategieDebutant;
 import strategie.StrategieExpert;
 
@@ -31,20 +35,21 @@ public class ControleurBouton implements ActionListener {
 				this.mod.setMasquer(true);	
 			}
 		}
-		if(a.getActionCommand().equals("Valider")) {
+		if(a.getActionCommand().equals("Valider") && !this.mod.getFini()) {
 			System.out.println(" valider");
 			this.mod.valider();
 		}
-		if(a.getActionCommand().equals("Debutant")) {
+		if(a.getActionCommand().equals("Debutant")&& !this.mod.getFini()) {
 			System.out.println(" débutant");
 			this.mod.setEval(new StrategieDebutant(this.mod));
 		}
-		if(a.getActionCommand().equals("Expert")) {
+		if(a.getActionCommand().equals("Expert")&& !this.mod.getFini()) {
 			System.out.println(" expert");
 			this.mod.setEval(new StrategieExpert(this.mod));
 		}
 		if(a.getActionCommand().equals("Rejouer")) {
 			System.out.println(" rejouer");
+			this.mod.resetJeu();
 		}
 	}
 }
