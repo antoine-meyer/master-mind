@@ -51,9 +51,11 @@ public class VueGrille extends JPanel implements Observateur {
 		if(!this.model.getMasquer()) {
 			this.model.getSecret().getImage(-1).dessinerDansComposant(g, 0, 0);	
 		}
-		//on affiche la case actuelle
-		g.setColor(Color.BLACK);
-		g.drawRect(this.model.getColonneEnCours()*TAILLE+5, TAILLE*9-(this.model.getLigneEnCours()+1)*TAILLE+5, 40, 40);
+		//on affiche la case actuelle que si on a fait 7 evaluations
+		if(this.model.getLigneEnCours() != 8) {
+			g.setColor(Color.BLACK);
+			g.drawRect(this.model.getColonneEnCours()*TAILLE+5, TAILLE*9-(this.model.getLigneEnCours()+1)*TAILLE+5, 40, 40);
+		}
 	}
 	/*
 	 * 

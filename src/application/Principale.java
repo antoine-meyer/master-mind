@@ -39,7 +39,7 @@ public class Principale {
 		JButton jbv = new JButton("Valider");
 		jbv.addActionListener(c);
 		panelBouton.add(jbv);
-		JButton jb = new JButton("Masquer");
+		JButton jb = new JButton("Rejouer");
 		jb.addActionListener(c);
 		panelBouton.add(jb);
 		JButton btnDebutant = new JButton("Debutant");

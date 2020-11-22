@@ -46,14 +46,15 @@ public class Modele implements Sujet {
 	 * constructeur d'un modèle
 	 */
 	public Modele() {
-		this.masquer = false;
+		//de base la solution est masquée
+		this.masquer = true;
 		this.ligneEnCours = 0;
 		this.colonneEnCours = 0;
 		int[] intSecret = { (int) (Math.random() * 6 + 1), (int) (Math.random() * 6 + 1), (int) (Math.random() * 6 + 1), (int) (Math.random() * 6 + 1) };
 		this.secret = new RangeeSimple(intSecret, this);
 		this.rangees = new ArrayList<Rangee>();
 		int[] ints = { 0, 0, 0, 0 }; 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 8; i++) {
 			this.rangees.add(new RangeeSimple(ints, this));
 		}
 		this.couleurEnCours = 0;
@@ -117,23 +118,36 @@ public class Modele implements Sujet {
 	 * 
 	 */
 	public void valider() {
-		int[] ints = this.getRangees().get(ligneEnCours).getInt();
-		//on vérifie que chaque bille à une couleur autre que celle de base
-		boolean validable = true;
-		for(int i=0; i<ints.length; i++) {
-			if(ints[i] == 0) {
-				validable = false;
+		//on regarde si on a fait 7 validations ou moins
+		if(this.ligneEnCours<=7) {
+			int[] ints = this.getRangees().get(ligneEnCours).getInt();
+			//on vérifie que chaque bille à une couleur autre que celle de base
+			boolean validable = true;
+			for(int i=0; i<ints.length; i++) {
+				if(ints[i] == 0) {
+					validable = false;
+				}
 			}
+			//si toutes les billes ont une couleur alors on peut valider la rangée
+			if(validable) {
+				//on décore la rangée sur laquelle on travaille 
+				this.rangees.set(ligneEnCours, new RangeeNotee(rangees.get(ligneEnCours)));
+				//on avance dans les colonnes
+				this.ligneEnCours = this.ligneEnCours + 1;
+				this.colonneEnCours = 0;
+			}
+			this.notifierObservateurs();
 		}
-		//si toutes les billes ont une couleur alors on peut valider la rangée
-		if(validable) {
-			//on décore la rangée sur laquelle on travaille 
-			this.rangees.set(ligneEnCours, new RangeeNotee(rangees.get(ligneEnCours)));
-			//on avance dans les colonnes
-			this.ligneEnCours = this.ligneEnCours + 1;
-			this.colonneEnCours = 0;
+		//si on a fait 7 evaluations
+		if(this.ligneEnCours==7)
+		{
+			//alors on enleve le curseur
+			//voir la classe VueGrille
+			
+			//on affiche victoire ou defaite en decorant la rangee secrete
+			
+			
 		}
-		this.notifierObservateurs();
 	}
 	/**
 	 * 

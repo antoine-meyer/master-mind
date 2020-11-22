@@ -22,7 +22,7 @@ public class StrategieDebutant implements StrategieEval {
             listCouleursSecret.add(reponseCouleursSecretes[i]);
         }
         //la liste des couleurs générale
-        Color[] couleurs = { Color.GRAY, Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.WHITE, Color.BLACK };
+        //Color[] couleurs = { Color.GRAY, Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.WHITE, Color.BLACK };
 		//la liste des couleurs proposes par le joueur
         int[] couleursRangeeSimple = this.model.getRangees().get(this.model.getLigneEnCours()).getInt().clone();
         //c'est le mode débutant	

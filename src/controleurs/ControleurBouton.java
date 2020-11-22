@@ -43,5 +43,8 @@ public class ControleurBouton implements ActionListener {
 			System.out.println(" expert");
 			this.mod.setEval(new StrategieExpert(this.mod));
 		}
+		if(a.getActionCommand().equals("Rejouer")) {
+			System.out.println(" rejouer");
+		}
 	}
 }
