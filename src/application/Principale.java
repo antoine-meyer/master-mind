@@ -4,8 +4,11 @@
 package application;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,48 +24,78 @@ import controleurs.ControleurCouleur;
  *
  */
 public class Principale {
-
-	public static void main(String[] args) {	
-		//commentaire
-		Modele m = new Modele();
-		ControleurCase ccase = new ControleurCase(m);
-		VueGrille v = new VueGrille(m);
-		v.addMouseListener(ccase);
-		m.enregistrerObservateur(v);
-		// JPanel situ� au nord de l'IG contenant les rang�es
-		// du jeu � remplir pour d�couvrir la bonne combinaison de couleurs
-		v.setPreferredSize(new Dimension(400,450));
+	
+	private static Modele model;
+	private static VueGrille grille;
+	private static JFrame frame;
+	
+	public static void main(String[] args) {
+		Principale.model = new Modele();
+		Principale.grille = new VueGrille(model);
+		Principale.init();
+	}
+	
+	private static void init() {
+	
+		Principale.grille.setPreferredSize(new Dimension(400,450));
+		Principale.model.enregistrerObservateur(Principale.grille);
+		ControleurCase controlCase= new ControleurCase(Principale.model);
+		Principale.grille.addMouseListener(controlCase);
+		
 		// JPanel au centre de l'IG contenant les 4 boutons
-		JPanel panelBouton= new JPanel(new GridLayout(2,2));
-		ControleurBouton c = new ControleurBouton(m);
-		//crea des boutons
+		JPanel panelBouton= new JPanel(new GridLayout(3,2));
+		ControleurBouton controlb=new ControleurBouton(Principale.model);
 		JButton jbv = new JButton("Valider");
-		jbv.addActionListener(c);
+		jbv.addActionListener(controlb);
 		panelBouton.add(jbv);
-		JButton jb = new JButton("Rejouer");
-		jb.addActionListener(c);
-		panelBouton.add(jb);
-		JButton btnDebutant = new JButton("Debutant");
-		btnDebutant.addActionListener(c);
-		panelBouton.add(btnDebutant);
+		
+		
+		
+		/*JButton jb = new JButton("Masquer");
+		jb.addActionListener(controlb);
+		panelBouton.add(jb);*/
+		
+		// Rejouer
+		JButton btnRejouer = new JButton("Rejouer");
+		btnRejouer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Principale.frame.dispose();
+				Principale.model=new Modele();
+				Principale.grille = new VueGrille(model);
+				Principale.init();
+			}
+		});
+		btnRejouer.setEnabled(true);
+		panelBouton.add(btnRejouer);
+		
+		
+		
 		JButton btnExpert = new JButton("Expert");
-		btnExpert.addActionListener(c);
+		btnExpert.addActionListener(controlb);
 		panelBouton.add(btnExpert);
+		JButton btnDebutant = new JButton("Debutant");
+		btnDebutant.addActionListener(controlb);
+		panelBouton.add(btnDebutant);
+
+		
+
 		// JPanel au sud de l'IG dans lequel se trouve l'affichage
 		// des couleurs disponibles 
-		ChoixCoul choixCoul= new ChoixCoul(m);
-		ControleurCouleur cc = new ControleurCouleur(m);
-		choixCoul.addMouseListener(cc);
+		JPanel choixCoul= new ChoixCoul(Principale.model);
+		ControleurCouleur controlCoul=new ControleurCouleur(Principale.model);
+		choixCoul.addMouseListener(controlCoul);
+
 		/*************************************
 		 * Construction de l'IG dans une JFrame
 		 *************************************/
-		JFrame frame=new JFrame("master-mind");	
-		frame.add(v,BorderLayout.NORTH); 
-		frame.add(panelBouton,BorderLayout.CENTER);
-		frame.add(choixCoul, BorderLayout.SOUTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
+		Principale.frame=new JFrame("master-mind");
+		Principale.frame.setBackground(new Color(0xDEB887)); // BurlyWood	
+		Principale.frame.add(Principale.grille,BorderLayout.NORTH); 
+		Principale.frame.add(panelBouton,BorderLayout.CENTER);
+		Principale.frame.add(choixCoul, BorderLayout.SOUTH);
+		Principale.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Principale.frame.pack();
+		Principale.frame.setVisible(true);
 	}
-
+	
 }
